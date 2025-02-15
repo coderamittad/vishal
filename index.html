@@ -1,19 +1,34 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewpoint" content="width=device-width, initial_scale=1.0">
-        <title>Image Search Engine</title>
-        <link rel="stylesheet" href="style.css">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    </head>
-    <body>
-        <h1>Search any Image</h1>
-        <form id="search-form">
-            <input type="text" id="search-box" placeholder="Search anything here....">
-            <button>Search</button>
-        </form>
-        <div id="search-result"></div>
-        <button id="show-more-btn">Show more</button>
-        <script src="a.js"></script>
-    </body>
+<h1>Search any Image</h1>
+<img th:src="@{https://tinyurl.com/46ehkswp}" alt="Company Logo">
+
+<!-- College Name -->
+<h2 class="marquee">Bill Gates College, Dharashiv</h2>
+
+<!-- कंफेटी एनिमेशन -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- सर्च बॉक्स -->
+<form id="search-form">
+    <input type="text" id="search-box" placeholder="Search anything here....">
+    <button>Search</button>
+</form>
+
+<!-- सर्च रिजल्ट -->
+<div id="search-result"></div>
+
+<!-- Show More बटन -->
+<button id="show-more-btn">Show more</button>
+
+<script src="a.js"></script>
+
+</body>
 </html>

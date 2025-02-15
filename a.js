@@ -8,6 +8,49 @@ const showMoreBtn = document.getElementById("show-more-btn");
 let keyword = "";
 let page = 1;
 
+// 🎉 कंफेटी सेटअप
+const confettiCanvas = document.getElementById("confetti-canvas");
+const ctx = confettiCanvas.getContext("2d");
+confettiCanvas.width = window.innerWidth;
+confettiCanvas.height = window.innerHeight;
+
+function startConfetti() {
+    let confetti = [];
+    const colors = ["#ff0", "#f00", "#0f0", "#00f", "#ff7f00", "#9400d3"];
+
+    for (let i = 0; i < 100; i++) {
+        confetti.push({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            r: Math.random() * 8 + 2,
+            dx: Math.random() * 4 - 2,
+            dy: Math.random() * 6 + 3,
+            color: colors[Math.floor(Math.random() * colors.length)],
+        });
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        confetti.forEach((c) => {
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.fillStyle = c.color;
+            ctx.fill();
+            c.x += c.dx;
+            c.y += c.dy;
+        });
+
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    setTimeout(() => {
+        ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+    }, 3000);
+}
+
+// 🔍 इमेज सर्च करने का फंक्शन
 async function searchImages() {
     keyword = searchBox.value;
     const url = `https://api.unsplash.com/search/photos?page=${page}&query=${keyword}&client_id=${accessKey}&per_page=12`;
@@ -27,12 +70,10 @@ async function searchImages() {
         imgElement.src = image.urls.small;
         imgElement.alt = image.alt_description;
 
-        // Download Button
         const downloadBtn = document.createElement("button");
         downloadBtn.innerText = "Download";
         downloadBtn.classList.add("download-btn");
 
-        // इमेज डाउनलोड करने का सही तरीका
         downloadBtn.addEventListener("click", async () => {
             const imageUrl = image.urls.full;
             const imageResponse = await fetch(imageUrl);
@@ -41,10 +82,12 @@ async function searchImages() {
 
             const a = document.createElement("a");
             a.href = imageURL;
-            a.download = "image.jpg"; // JPG फॉर्मेट में सेव होगा
+            a.download = "image.jpg";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
+
+            startConfetti();
         });
 
         imgContainer.appendChild(imgElement);
